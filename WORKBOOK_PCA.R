@@ -261,3 +261,5 @@ var1 <- sqrt(sparrows.pca$sdev)
 var1
 
 diag(var(sparrows.pca$x))
+
+#HI 
