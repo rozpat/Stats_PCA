@@ -1,4 +1,12 @@
-meteorology<-read.csv("C:/Users/Pati/OneDrive - Aberystwyth University/STATS/WORKBOOKS/PCA/meteorology.csv",row.names=1)
+library(ggplot2)
+library(bootstrap)
+install.packages("GGally")
+library(GGally)
+library(ggplot2)
+
+#QUESTION 1
+#a
+meteorology<-read.csv("C:/Users/Pati/OneDrive - Aberystwyth University/STATS/WORKBOOKS/PCA/Datasets/meteorology.csv",row.names=1)
 met.pca<-prcomp(meteorology, scale=TRUE)
 
 met.pca$center
@@ -9,8 +17,6 @@ met.pca$sdev
 #b
 proportions <- met.pca$sdev^2/sum(met.pca$sdev^2)
 proportions
-
-library(ggplot2)
 
 #SCREE PLOT
 qplot(c(1:5), proportions) + 
@@ -28,38 +34,42 @@ p1 <- ggplot(met.pca.scores.df, aes(x=PC1, y=PC2)) +
 p1
 
 #QUESTION 2
+head(scor)   # head() function shows you the top six rows – useful for getting a sense of the shape of a data set
 
-library(bootstrap)
-head(scor)   # the data frame is called scor and the head() function shows you the top six rows – useful for getting a sense of the shape of a data set
-
-scor.pca<-prcomp(scor, scale=TRUE)
+scor.pca <- prcomp(scor, scale=TRUE)
 
 proportions <- scor.pca$sdev^2/sum(scor.pca$sdev^2)
 proportions
 
 #plot 1
 scor.pca.scores.df <- data.frame(scor.pca$x)
-p1 <- ggplot(scor.pca.scores.df, aes(x=PC1, y=PC2)) +
+
+plot1 <- ggplot(scor.pca.scores.df, aes(x=PC1, y=PC2)) +
   geom_point() +
   labs(x=paste0("PC1 (", 100*round(proportions[1], 2), "% of variability)"), y=paste0("PC2 (", 100*round(proportions[2], 2), "% of variability)")) + 
   ggtitle("PC2 against PC1")
-p1
+
+plot1
 
 #plot 2
 scor.pca.scores.df <- data.frame(scor.pca$x)
-p2 <- ggplot(scor.pca.scores.df, aes(x=PC1, y=PC3)) +
+
+plot2 <- ggplot(scor.pca.scores.df, aes(x=PC1, y=PC3)) +
   geom_point() +
   labs(x=paste0("PC1 (", 100*round(proportions[1], 2), "% of variability)"), y=paste0("PC3 (", 100*round(proportions[3], 2), "% of variability)")) + 
   ggtitle("PC3 against PC1")
-p2
+
+plot2
 
 #plot 3
 scor.pca.scores.df <- data.frame(scor.pca$x)
-p3 <- ggplot(scor.pca.scores.df, aes(x=PC2, y=PC3)) +
+
+plot3 <- ggplot(scor.pca.scores.df, aes(x=PC2, y=PC3)) +
   geom_point() +
   labs(x=paste0("PC2 (", 100*round(proportions[2], 2), "% of variability)"), y=paste0("PC3 (", 100*round(proportions[3], 2), "% of variability)")) + 
   ggtitle("PC3 against PC2")
-p3
+
+plot3
 
 #SCREE PLOT
 qplot(c(1:5), proportions) + 
@@ -180,16 +190,7 @@ qplot(c(1:8), proportions) +
   ylim(0, 1)
 
 #QUESTION 5
-# Assuming you have read the data frame in and called it sparrows,
-# you may find some of the following code helpful in writing your 
-# short report.
-
-install.packages("GGally")
-library(GGally)
-library(ggplot2)
-
-## Descriptive statistics
-
+# Descriptive statistics
 sparrows <- read.csv("C:/Users/Pati/OneDrive - Aberystwyth University/STATS/WORKBOOKS/PCA/sparrows.csv")
 
 boxplot(sparrows[,3:11], las = 2)
@@ -245,6 +246,7 @@ ggplot(sparrows_scores.df,
        aes(x=PC1, y=PC2, col=factor(survive))) +
   geom_point() + 
   labs(col = "survive")
+
 # Remember to include proportions of variability 
 # explained by PCs and appropriate axis labels and title
 
@@ -261,5 +263,3 @@ var1 <- sqrt(sparrows.pca$sdev)
 var1
 
 diag(var(sparrows.pca$x))
-
-#HI 

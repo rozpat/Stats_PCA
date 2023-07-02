@@ -1,7 +1,3 @@
-# Assuming you have read the data frame in and called it sparrows,
-# you may find some of the following code helpful in writing your 
-# short report.
-
 install.packages("GGally")
 library(GGally)
 library(ggplot2)
